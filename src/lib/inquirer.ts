@@ -3,34 +3,45 @@ import { Orientation } from "../types";
 
 import config from "../utils/config";
 
+const validateStringInput = {
+  validate: (input: string) => {
+    if (config.VALIDATION_ROW.includes(input.toUpperCase())) {
+      return true;
+    } else {
+      return "Please enter a valid choice";
+    }
+  },
+  filter: (input: string) => {
+    return !config.VALIDATION_ROW.includes(input.toUpperCase()) ? "" : input.toUpperCase();
+  },
+};
+
+const validateNumberInput = {
+  validate: (input: number) => {
+    if (config.VALIDATION_COLUMN.includes(input)) {
+      return true;
+    } else {
+      return "Please enter a valid choice";
+    }
+  },
+  filter: (input: number) => {
+    return Number.isNaN(input) || !config.VALIDATION_COLUMN.includes(input) ? "" : Number(input);
+  },
+};
+
 const askShipCoordinates = () => {
   const questions = [
     {
       name: "XCoord",
       type: "input",
       message: config.SHIP_X_MESSAGE,
-      validate: function (value: string) {
-        if (config.VALIDATION_ROW.includes(value.toUpperCase())) {
-          return true;
-        } else {
-          return "Please enter a valid choice";
-        }
-      },
-      filter: function (value: string) {
-        return value.toUpperCase();
-      },
+      ...validateStringInput,
     },
     {
       name: "YCoord",
       type: "number",
       message: config.SHIP_Y_MESSAGE,
-      validate: function (value: number) {
-        if (config.VALIDATION_COLUMN.includes(value)) {
-          return true;
-        } else {
-          return "Please enter a valid choice";
-        }
-      },
+      ...validateNumberInput,
     },
   ];
   return inquirer.prompt(questions);
@@ -75,28 +86,13 @@ const fire = () => {
       name: "XCoord",
       type: "input",
       message: config.FIRE_X_MESSAGE,
-      validate: function (value: string) {
-        if (config.VALIDATION_ROW.includes(value.toUpperCase())) {
-          return true;
-        } else {
-          return "Please enter a valid choice";
-        }
-      },
-      filter: function (value: string) {
-        return value.toUpperCase();
-      },
+      ...validateStringInput,
     },
     {
       name: "YCoord",
       type: "number",
       message: config.FIRE_Y_MESSAGE,
-      validate: function (value: number) {
-        if (config.VALIDATION_COLUMN.includes(value)) {
-          return true;
-        } else {
-          return "Please enter a valid choice";
-        }
-      },
+      ...validateNumberInput,
     },
   ];
   return inquirer.prompt(questions);

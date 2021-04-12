@@ -25,7 +25,7 @@ const createInputMessages = () => {
 
   config.FIRE_X_MESSAGE = `Enter X Coordinate To Shoot! ${rowMessage}`;
 
-  config.FIRE_Y_MESSAGE = `Enter X Coordinate To Shoot! ${rowMessage}`;
+  config.FIRE_Y_MESSAGE = `Enter Y Coordinate To Shoot! ${columnMessage}`;
 };
 
 export default { createValidationArrays, createInputMessages };
